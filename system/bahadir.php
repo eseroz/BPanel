@@ -1,18 +1,37 @@
 <?php
 //error_reporting(0);
 
+
+
 require 'BDatabase.php';
 require 'BFunctions.php';
 
 
 $bahadir = new bahadir();
-$bahadir->OTURUM_KONTROL();
-$SETTINGS = $bahadir->GET_SITE_SETTINGS();
+
+if($panel == true){
+    $bahadir->OTURUM_KONTROL();
+}else{
+    $SETTINGS = $bahadir->GET_SITE_SETTINGS();
+}
+
 
 class bahadir extends PDO
 {
     public $mssqlDb;
     public $fnc;
+
+    public static $MaxUploadFileSize = 4096;
+
+    public static $slayt_foto_x = 1920;
+    public static $slayt_foto_y = 500;
+    public static $slayt_foto_thumbnail_x = 290;
+    public static $slayt_foto_thumbnail_y = 180;
+    public static $slayt_foto_resize = false;
+    public static $slayt_foto_ratio_crop = false;
+    public static $slayt_foto_tablename = 'slayt';
+    public static $slayt_foto_input_name = 'resim';
+
 
 	function __construct()
 	{
@@ -21,7 +40,6 @@ class bahadir extends PDO
         $mssql_uid = "sa";
         $mssql_password = "43179488**1CSHARP**1";
         $this->mssqlDb = new MSSQL_Database($mssql_host,$mssql_database,$mssql_uid,$mssql_password);
-
         $this->SESSION_START();
         $this->fnc = new BFunctions();
 	}
@@ -29,7 +47,6 @@ class bahadir extends PDO
     public function SESSION_START(){
 		session_start();
 		ob_start();
-        echo "BAŞLADI";
 	}
 
 	public function SESSION_FLUSH()
@@ -41,8 +58,6 @@ class bahadir extends PDO
         setcookie('panel2016_username', null, time()-1, '/panel');
         setcookie('panel2016_password', null, time()-1, '/panel');
         setcookie('panel2016_remember', null, time()-1, '/panel');
-
-        $this->Audit("Logout",11,0,"panelden çıktı.");
 
         session_destroy();
         ob_end_flush();
@@ -65,6 +80,7 @@ class bahadir extends PDO
         if(count($LOGIN) > 0){
 
             $_SESSION['ON'] = "ON";
+
             if ($remember == "on") {
                 setcookie('BUSER_NAME', $username_md5, time()+60*60*24*365, '/panel');
                 setcookie('BPASSWORD', $password_md5, time()+60*60*24*365, '/panel');
@@ -76,7 +92,8 @@ class bahadir extends PDO
             }
             header("location:index.php");
         }else{
-            header("location:login.php");
+            $message = "Hatalı kullanıcı adı veya parola!";
+            return $message;
         }
     }
 
@@ -88,4 +105,24 @@ class bahadir extends PDO
     public function TRANSLATE_WORD($kelime, $site = 0){
         return $kelime;
     }
+
+    public function SLAYT_EKLE(){
+
+        $baslik1 = $this->fnc->post("baslik1");
+        $baslik2 = $this->fnc->post("baslik2");
+        $aciklama = $this->fnc->post("aciklama");
+
+        $content = $this->fnc->post("content");
+        $seo = $this->fnc->turkce_karakter_temizle($aciklama);
+
+        $resim = $this->fnc->ResimYukle(self::$slayt_foto_input_name,self::$slayt_foto_x,self::$slayt_foto_y,self::$slayt_foto_tablename,self::$slayt_foto_resize,self::$slayt_foto_ratio_crop);
+        $resim_thumbnail = $this->fnc->ResimYukle(self::$slayt_foto_input_name,self::$slayt_foto_thumbnail_x,self::$slayt_foto_thumbnail_y,self::$slayt_foto_tablename,self::$slayt_foto_resize,self::$slayt_foto_ratio_crop);
+        $SIRA = 0;
+
+        $this->mssqlDb->ExexQuery("INSERT INTO SLIDER (SEQUENCE,IMG_SM,IMG_LG,TITLE1,TITLE2,DESCRIPTION,CONTENT_HTML,SEO) VALUES($SIRA,'$resim_thumbnail','$resim','$baslik1','$baslik2','$aciklama','$content','$seo')");
+
+
+    }
+
+
 }

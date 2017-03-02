@@ -1,4 +1,8 @@
-
+<?php
+if($_POST){
+    $bahadir->SLAYT_EKLE();
+}
+?>
 <div class="container container-alt">
     <div class="block-header">
         <h2>
@@ -24,9 +28,9 @@
                     </a>
                 </li>
                 <li>
-                    <button id="btnSlaytEkle" type="button" href="#" title="<?php echo $bahadir->TRANSLATE_WORD("yeni slayt ekle", 1); ?>">
+                    <a id="btnSlaytEkle" href="#" title="<?php echo $bahadir->TRANSLATE_WORD("yeni slayt ekle", 1); ?>">
                         <i class="zmdi zmdi-plus-square"></i>
-                    </button>
+                    </a>
                 </li>
                 <li>
                     <a href="#" title="<?php echo $bahadir->TRANSLATE_WORD("ayarlar", 1); ?>">
@@ -35,29 +39,22 @@
                 </li>
             </ul>
         </div>
-
-
         <div class="card-body card-padding">
             <div class="lightbox photos clearfix">
-
                 <?php
                 $SLAYTLAR = $bahadir->mssqlDb->Select("SELECT *FROM SLIDER ORDER BY ID DESC");
                 foreach ($SLAYTLAR as $SLAYT)
                 {
                 ?>
-
-                <div data-src="/uploads/slider/<?php echo $SLAYT["IMG_PATH_SM"]; ?>" class="col-md-4 col-sm-4 col-xs-6">
+                <div data-src="/uploads/images/slayt/<?php echo $SLAYT["IMG_SM"]; ?>" class="col-md-4 col-sm-4 col-xs-6">
                     <div class="lightbox-item p-item">
-                        <img src="/uploads/slider/<?php echo $SLAYT["IMG_PATH_SM"]; ?>" alt="<?php echo $SLAYT["TITLE1"]; ?>" />
+                        <img src="/uploads/images/slayt/<?php echo $SLAYT["IMG_SM"]; ?>" alt="<?php echo $SLAYT["TITLE1"]; ?>" />
                     </div>
                 </div>
-
                 <?php
                 }
                 ?>
-
             </div>
-
             <div class="clearfix"></div>
             <div class="load-more m-t-30">
                 <a href="">
@@ -65,85 +62,76 @@
                 </a>
             </div>
         </div>
+    </div>
+</div>
 
+<div class="modal fade" id="modalWider" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form method="post" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h4 class="modal-title">Slayt</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>1. Başlık</label>
+                            <input type="text" name="baslik1" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>2. Başlık</label>
+                            <input type="text" name="baslik2" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Kısa Açıklama</label>
+                            <input type="text" name="aciklama" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Slayt Resmi</label>
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width:783px !important; height:193px !important; background-color:#f2f2f2;background-size:cover;"></div>
+                                <div>
+                                    <span class="btn btn-info btn-file">
+                                        <span class="fileinput-new">Resim Seç</span>
+                                        <input type="file" name="resim" accept="image/*" />
+                                    </span>
+                                    <a href="#" class="btn btn-danger fileinput-exists" data-dismiss="fileinput">Sil</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>İçerik</label>
+                            <textarea name="content" class="html-editor"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button id="btnSlaytKaydet" type="submit" class="btn btn-link waves-effect">Kaydet</button>
+                    <button id="btnSlaytGuncelle" type="submit" class="btn btn-link waves-effect">Güncelle</button>
+                    <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">
+                        Kapat
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
 
 <script>
     $(document).ready(function () {
-        $("#btnSlaytEkle").click(function () {   });
-    });
-</script>
+        $("#btnSlaytEkle").click(function () {
+            $("#modalWider").modal("show");
+        });
 
-<div class="btn-demo" id="btn-color-targets">
-    <a href="#modalColor" data-target-color="blue" data-toggle="modal" class="btn bgm-blue">Blue</a>
-    <a href="#modalColor" data-target-color="lightblue" data-toggle="modal"
-        class="btn bgm-lightblue">
-        Light Blue
-    </a>
-    <a href="#modalColor" data-target-color="cyan" data-toggle="modal" class="btn bgm-cyan">Cyan</a>
-    <a href="#modalColor" data-target-color="green" data-toggle="modal"
-        class="btn bgm-green">
-        Green
-    </a>
-    <a href="#modalColor" data-target-color="lightgreen" data-toggle="modal"
-        class="btn bgm-lightgreen">
-        Light Green
-    </a>
-    <a href="#modalColor" data-target-color="red" data-toggle="modal" class="btn bgm-red">Red</a>
-    <a href="#modalColor" data-target-color="amber" data-toggle="modal"
-        class="btn bgm-amber">
-        Amber
-    </a>
-    <a href="#modalColor" data-target-color="orange" data-toggle="modal"
-        class="btn bgm-orange">
-        Orange
-    </a>
-    <a href="#modalColor" data-target-color="teal" data-toggle="modal" class="btn bgm-teal">Teal</a>
-    <a href="#modalColor" data-target-color="bluegray" data-toggle="modal"
-        class="btn bgm-bluegray">
-        Blue Gray
-    </a>
-</div>
+        $("#btnSlaytKaydet").click(function () {
 
+        });
 
-<div class="modal fade" data-modal-color="" id="modalColor" data-backdrop="static"
-    data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Modal title</h4>
-            </div>
-            <div class="modal-body">
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sodales
-                    orci ante, sed ornare eros vestibulum ut. Ut accumsan vitae eros sit
-                    amet tristique. Nullam scelerisque nunc enim, non dignissim nibh
-                    faucibus ullamcorper. Fusce pulvinar libero vel ligula iaculis
-                    ullamcorper. Integer dapibus, mi ac tempor varius, purus nibh mattis
-                    erat, vitae porta nunc nisi non tellus. Vivamus mollis ante non massa
-                    egestas fringilla. Vestibulum egestas consectetur nunc at ultricies.
-                    Morbi quis consectetur nunc.
-                </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-link">Save changes</button>
-                <button type="button" class="btn btn-link" data-dismiss="modal">
-                    Close
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
+        $("#btnSlaytGuncelle").click(function () {
 
-<script src="/panel/assets/plugins/bootstrap-growl/bootstrap-growl.min.js"></script>
-<script src="/panel/assets/plugins/bower_components/Waves/dist/waves.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('body').on('click', '#btn-color-targets > .btn', function(){
-            var color = $(this).data('data-target-color');
-            $('#modalColor').attr('data-modal-color', color);
         });
     });
 </script>

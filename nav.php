@@ -2,7 +2,7 @@
 <div class="s-profile">
     <a href="#" data-ma-action="profile-menu-toggle">
         <div class="sp-pic">
-            <img src="/assets/img/demo/profile-pics/1.jpg" alt="">
+            <img src="/panel/assets/img/demo/profile-pics/1.jpg" alt="">
         </div>
         <div class="sp-info">
            Bahadır Tıbbi Aletler A.Ş
@@ -20,7 +20,7 @@
             <a href="#"><i class="zmdi zmdi-settings"></i> Settings</a>
         </li>
         <li>
-            <a href="/logout.php"><i class="zmdi zmdi-time-restore"></i> Logout</a>
+            <a href="/panel/logout.php"><i class="zmdi zmdi-time-restore"></i> Logout</a>
         </li>
     </ul>
 </div>

@@ -1,4 +1,7 @@
-<?php include_once 'includes.php'; ?>
+<?php
+$panel = true;
+include_once 'includes.php';
+?>
 <!DOCTYPE html>
 <!--[if IE 9 ]><html class="ie9"><![endif]--> 
 <html lang="tr">
@@ -12,8 +15,13 @@
         <link href="/panel/assets/plugins/bower_components/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
         <link href="/panel/assets/plugins/bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.min.css" rel="stylesheet">
         <link href="/panel/assets/plugins/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet">
+    
+        <link href="/panel/assets/plugins/summernote/dist/summernote.css" rel="stylesheet" />
+        <link href="/panel/assets/plugins/bower_components/bootstrap-select/dist/css/bootstrap-select.css" rel="stylesheet" />
+
         <link href="/panel/assets/css/app_1.min.css" rel="stylesheet">
         <link href="/panel/assets/css/app_2.min.css" rel="stylesheet">
+        <script src="/panel/assets/plugins/bower_components/jquery/dist/jquery.min.js"></script>
     </head>
     <body>
        <?php include_once("header.php"); ?>
@@ -95,7 +103,7 @@
             </div>
         <![endif]-->
 
-        <script src="/panel/assets/plugins/bower_components/jquery/dist/jquery.min.js"></script>
+      
         <script src="/panel/assets/plugins/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
         <script src="/panel/assets/plugins/bower_components/flot/jquery.flot.js"></script>
@@ -111,6 +119,13 @@
         <script src="/panel/assets/plugins/bootstrap-growl/bootstrap-growl.min.js"></script>
         <script src="/panel/assets/plugins/bower_components/sweetalert2/dist/sweetalert2.min.js"></script>
         <script src="/panel/assets/plugins/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+
+
+        <script src="/panel/assets/plugins/summernote/dist/summernote-updated.min.js"></script>
+
+        <script src="/panel/assets/plugins/bower_components/bootstrap-select/dist/js/bootstrap-select.js"></script>
+        <script src="/panel/assets/plugins/fileinput/fileinput.min.js"></script>
+
 
         <!-- Placeholder for IE9 -->
         <!--[if IE 9 ]>
