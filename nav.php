@@ -1,16 +1,14 @@
+
 <div class="s-profile">
     <a href="#" data-ma-action="profile-menu-toggle">
         <div class="sp-pic">
             <img src="/assets/img/demo/profile-pics/1.jpg" alt="">
         </div>
-
         <div class="sp-info">
-            Malinda Hollaway
-
+           Bahadır Tıbbi Aletler A.Ş
             <i class="zmdi zmdi-caret-down"></i>
         </div>
     </a>
-
     <ul class="main-menu">
         <li>
             <a href="profile-about.html"><i class="zmdi zmdi-account"></i> View Profile</a>
@@ -26,27 +24,22 @@
         </li>
     </ul>
 </div>
+
+
+
 <ul class="main-menu">
     <li class="active">
-        <a href="index.html"><i class="zmdi zmdi-home"></i> Home</a>
+        <a href="index.html"><i class="zmdi zmdi-home"></i> Gösterge Paneli</a>
     </li>
-    <li class="sub-menu">
-        <a href="#" data-ma-action="submenu-toggle"><i class="zmdi zmdi-chart"></i> Dashboards</a>
+    <!--<li class="sub-menu">
+        <a href="#" data-ma-action="submenu-toggle"><i class="zmdi zmdi-chart"></i>  Gösterge Paneli</a>
 
         <ul>
-            <li><a href="dashboards/analytics.html">Analytics</a></li>
-            <li><a href="dashboards/school.html">School</a></li>
+            <li><a href="dashboards/analytics.html">Google Analytics</a></li>
+            <li><a href="dashboards/school.html">Site Verileri</a></li>
         </ul>
-    </li>
-    <li class="sub-menu">
-        <a href="#" data-ma-action="submenu-toggle"><i class="zmdi zmdi-view-compact"></i> Headers</a>
-
-        <ul>
-            <li><a href="textual-menu.html">Textual menu</a></li>
-            <li><a href="image-logo.html">Image logo</a></li>
-            <li><a href="top-mainmenu.html">Mainmenu on top</a></li>
-        </ul>
-    </li>
+    </li>-->
+    <li><a href="?view=slaytlar"><i class="zmdi zmdi-view-compact"></i> Slaytlar</a></li>
     <li><a href="typography.html"><i class="zmdi zmdi-format-underlined"></i> Typography</a></li>
     <li class="sub-menu">
         <a href="#" data-ma-action="submenu-toggle"><i class="zmdi zmdi-widgets"></i> Widgets</a>

@@ -6,13 +6,13 @@
                 <div class="line center"></div>
                 <div class="line bottom"></div>
             </div>
-        </li>
+        </li> 
 
         <li class="hi-logo hidden-xs">
             <a href="index.html">Material Admin</a>
         </li>
 
-        <li class="pull-right">
+        <li class="pull-right"> 
             <ul class="hi-menu">
 
                 <li data-ma-action="search-open">

@@ -80,30 +80,4 @@ class BFunctions
         }
         return $array;
     }
-
-
-
-    public function SESSION_START(){
-		session_start();
-		ob_start();
-	}
-
-	public function SESSION_FLUSH()
-	{
-        session_start();
-
-        unset($_COOKIE['panel2016_username']);
-        unset($_COOKIE['panel2016_password']);
-        unset($_COOKIE['panel2016_remember']);
-
-        setcookie('panel2016_username', null, time()-1, '/panel');
-        setcookie('panel2016_password', null, time()-1, '/panel');
-        setcookie('panel2016_remember', null, time()-1, '/panel');
-
-        $this->Audit("Logout",11,0,"panelden çıktı.");
-
-        session_destroy();
-        ob_end_flush();
-        header("location:index.php");
     }
-}

@@ -3,10 +3,8 @@ if($_POST){
     include_once('system/bahadir.php');
     $username = $_POST["username"];
     $password = $_POST["password"];
-    $remember = $_POST["remember"];
-    echo $remember;
-    return;
-    $bahadir->LOGIN($username, $password, $remember);
+    $remember = $_POST["remember"]; 
+    $bahadir->LOGIN($username, $password, $remembe);
 }
 ?>
 
@@ -25,12 +23,11 @@ if($_POST){
     <link href="/assets/css/app_1.min.css" rel="stylesheet">
     <link href="/assets/css/app_2.min.css" rel="stylesheet">
 </head>
+
 <body>
     <div class="login-content">
         <!-- Login -->
         <div class="lc-block toggled" id="l-login">
-
-
             <div class="lcb-form">
                 <form method="post" enctype="multipart/form-data">
                     <div class="input-group m-b-20">
@@ -61,7 +58,6 @@ if($_POST){
                     </button>
                 </form>
             </div>
-
 
             <div class="lcb-navigation">
                 <!--<a href="#" data-ma-action="login-switch" data-ma-block="#l-register"><i class="zmdi zmdi-plus"></i> <span>Register</span></a>-->

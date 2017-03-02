@@ -6,12 +6,13 @@ require 'BFunctions.php';
 
 
 $bahadir = new bahadir();
-$bahadir->SESSION_START();
+$bahadir->OTURUM_KONTROL();
+$SETTINGS = $bahadir->GET_SITE_SETTINGS();
 
 class bahadir extends PDO
 {
     public $mssqlDb;
-    public $functionss;
+    public $fnc;
 
 	function __construct()
 	{
@@ -20,19 +21,19 @@ class bahadir extends PDO
         $mssql_uid = "sa";
         $mssql_password = "43179488**1CSHARP**1";
         $this->mssqlDb = new MSSQL_Database($mssql_host,$mssql_database,$mssql_uid,$mssql_password);
-        $this->functionss = new BFunctions();
+
         $this->SESSION_START();
+        $this->fnc = new BFunctions();
 	}
 
     public function SESSION_START(){
 		session_start();
 		ob_start();
+        echo "BAÅžLADI";
 	}
 
 	public function SESSION_FLUSH()
 	{
-        session_start();
-
         unset($_COOKIE['panel2016_username']);
         unset($_COOKIE['panel2016_password']);
         unset($_COOKIE['panel2016_remember']);
@@ -41,7 +42,7 @@ class bahadir extends PDO
         setcookie('panel2016_password', null, time()-1, '/panel');
         setcookie('panel2016_remember', null, time()-1, '/panel');
 
-        $this->Audit("Logout",11,0,"panelden çýktý.");
+        $this->Audit("Logout",11,0,"panelden Ã§Ä±ktÄ±.");
 
         session_destroy();
         ob_end_flush();
@@ -79,7 +80,12 @@ class bahadir extends PDO
         }
     }
 
-    public function Cevirmen($kelime, $language_id, $site = 0){
+    public function GET_SITE_SETTINGS(){
+        $SETTINGS = $this->mssqlDb->Select("SELECT *FROM SITE_SETTING");
+        return $SETTINGS[0];
+    }
+
+    public function TRANSLATE_WORD($kelime, $site = 0){
         return $kelime;
     }
 }

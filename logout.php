@@ -1,4 +1,4 @@
 <?php
 include_once('system/bahadir.php');
-$bahadir->SESSION_FLUSH();
+$bahadir->SESSION_FLUSH(); 
 ?>

@@ -191,7 +191,6 @@
     <Compile Include="assets\img\notifications.png" />
     <Compile Include="assets\img\profile-menu.png" />
     <Compile Include="assets\img\select.png" />
-    <Compile Include="assets\img\select@402x.png" />
     <Compile Include="assets\js\app.min.js" />
     <Compile Include="assets\plugins\bootstrap-growl\bootstrap-growl.min.js" />
     <Compile Include="assets\plugins\bootstrap-wizard\jquery.bootstrap.wizard.min.js" />
@@ -445,5 +444,9 @@
     <Folder Include="pages\" />
     <Folder Include="system\" />
     <Folder Include="tmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="assets\img\backgroundpm3.jpg" />
+    <Content Include="assets\img\select%402x.png" />
   </ItemGroup>
 </Project>
