@@ -36,7 +36,7 @@ class BFunctions
         if($encode){
             return $this->encoding->STR_UTF8_TO_MSSQL($_POST[$par]);
         }else{
-            return addslashes(trim(htmlentities($_POST[$par])));
+            return $this->encoding->STR_UTF8_TO_MSSQL(addslashes(trim(htmlentities($_POST[$par]))));
         }
     }
 

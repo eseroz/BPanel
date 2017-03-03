@@ -3,15 +3,30 @@ if($_POST){
     $bahadir->SLAYT_EKLE();
 }
 ?>
-<div class="container container-alt">
-    <div class="block-header">
+
+<style>
+    #slaytlar {
+        list-style: none;
+    }
+
+        #slaytlar li {
+            list-style: none;
+            -webkit-box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.44);
+            -moz-box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.44);
+            box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.44);
+            padding:5px;
+            margin:2px;
+        }
+</style>
+<div class="container">
+    <!--<div class="block-header">
         <h2>
             <?php echo $bahadir->TRANSLATE_WORD("slaytlar", 1); ?>
             <small>
                 <?php echo $bahadir->TRANSLATE_WORD("slaytları yönetin", 1); ?>
             </small>
         </h2>
-    </div>
+    </div>-->
     <div class="card">
         <div class="action-header clearfix">
             <div class="ah-label hidden-xs">
@@ -39,21 +54,31 @@ if($_POST){
                 </li>
             </ul>
         </div>
-        <div class="card-body card-padding">
+        <div class="card-body">
             <div class="lightbox photos clearfix">
-                <?php
-                $SLAYTLAR = $bahadir->mssqlDb->Select("SELECT *FROM SLIDER ORDER BY ID DESC");
-                foreach ($SLAYTLAR as $SLAYT)
-                {
-                ?>
-                <div data-src="/uploads/images/slayt/<?php echo $SLAYT["IMG_SM"]; ?>" class="col-md-4 col-sm-4 col-xs-6">
-                    <div class="lightbox-item p-item">
-                        <img src="/uploads/images/slayt/<?php echo $SLAYT["IMG_SM"]; ?>" alt="<?php echo $SLAYT["TITLE1"]; ?>" />
-                    </div>
-                </div>
-                <?php
-                }
-                ?>
+                <ul id="slaytlar" style="padding:0px;">
+                    <?php
+                    $SLAYTLAR = $bahadir->mssqlDb->Select("SELECT *FROM SLIDER ORDER BY ID ASC");
+                    foreach ($SLAYTLAR as $SLAYT)
+                    {
+                    ?>
+                    <li data-id="<?php echo $SLAYT["ID"]; ?>" data-src="/uploads/images/slayt/<?php echo $SLAYT["IMG_SM"]; ?>" class="col-lg-3 col-md-3 col-sm-12 col-xs-12 ui-state-default">
+                        <div class="lightbox-item p-item" style="cursor:move;">
+                            <img src="/uploads/images/slayt/<?php echo $SLAYT["IMG_SM"]; ?>" alt="<?php echo $SLAYT["TITLE1"]; ?>" />
+                        </div>
+                        <br />
+                        <div style="float:right;">
+                            <div class="toggle-switch toggle-switch-demo" data-ts-color="blue">
+                                <label for="ts<?php echo $SLAYT["ID"]; ?>" class="ts-label">Görünürlük</label>
+                                <input id="ts<?php echo $SLAYT["ID"]; ?>" type="checkbox" hidden="hidden" value="<?php echo $SLAYT["VISIBILITY"]; ?>" />
+                                <label for="ts<?php echo $SLAYT["ID"]; ?>" class="ts-helper"></label>
+                            </div>
+                        </div>
+                    </li>
+                    <?php
+                    }
+                    ?>
+                </ul>
             </div>
             <div class="clearfix"></div>
             <div class="load-more m-t-30">
@@ -64,7 +89,49 @@ if($_POST){
         </div>
     </div>
 </div>
+<script>
+    $(function () {
 
+        $("#slaytlar").sortable({
+            change: function (event, ui) {
+                var SIRA_LISTESI = [];
+                $("#slaytlar").find("li").each(function (index) {
+                    var id = $(this).attr("data-id");
+                    if (typeof id !== 'undefined') {
+                        var sira = index + 1;
+                        var elm = new Array(id, sira);
+                        SIRA_LISTESI.push(elm);
+                    }
+                });
+
+                var formData = new FormData();
+                formData.append("OPTION", "SLIDER_SEQUENCE");
+                formData.append("LISTE", JSON.stringify(SIRA_LISTESI));
+
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    data: formData,
+                    url: 'pages/ajax.php',
+                    processData: false,
+                    contentType: false,
+                    success: function (result) {
+                        console.log(result);
+                    },
+                    error: function (a, b, c) {
+                        console.error("Slayt sırası kaydedilirken bir hata oluştu. Ama bu çok önemli bir şey değil.");
+                        console.error(a);
+                        console.error(b);
+                        console.error(c);
+                    }
+
+                });
+            }
+        });
+
+        //$("#slaytlar").disableSelection();
+    });
+</script>
 <div class="modal fade" id="modalWider" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
