@@ -4,36 +4,17 @@ if($_POST){
 }
 ?>
 
-<style>
-    #slaytlar {
-        list-style: none;
-    }
+<link href="/panel/pages/slaytlar/css.css" rel="stylesheet" />
+<script src="/panel/pages/slaytlar/js.js"></script>
 
-        #slaytlar li {
-            list-style: none;
-            -webkit-box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.44);
-            -moz-box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.44);
-            box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.44);
-            padding:5px;
-            margin:2px;
-        }
-</style>
 <div class="container">
-    <!--<div class="block-header">
-        <h2>
-            <?php echo $bahadir->TRANSLATE_WORD("slaytlar", 1); ?>
-            <small>
-                <?php echo $bahadir->TRANSLATE_WORD("slaytları yönetin", 1); ?>
-            </small>
-        </h2>
-    </div>-->
     <div class="card">
         <div class="action-header clearfix">
             <div class="ah-label hidden-xs">
                 <?php echo $bahadir->TRANSLATE_WORD("slayt arayın", 1); ?>
             </div>
             <div class="ah-search">
-                <input type="text" placeholder=" <?php echo $bahadir->TRANSLATE_WORD("aranacak kelime", 1); ?>" class="ahs-input" />
+                <input type="text" placeholder="<?php echo $bahadir->TRANSLATE_WORD("aranacak kelime", 1); ?>" class="ahs-input" />
                 <i class="ahs-close" data-ma-action="action-header-close">&times;</i>
             </div>
             <ul class="actions">
@@ -55,30 +36,39 @@ if($_POST){
             </ul>
         </div>
         <div class="card-body">
-            <div class="lightbox photos clearfix">
-                <ul id="slaytlar" style="padding:0px;">
-                    <?php
+            <div id="sortable" class="lightbox photos clearfix">                
+                <?php
                     $SLAYTLAR = $bahadir->mssqlDb->Select("SELECT *FROM SLIDER ORDER BY ID ASC");
                     foreach ($SLAYTLAR as $SLAYT)
                     {
-                    ?>
-                    <li data-id="<?php echo $SLAYT["ID"]; ?>" data-src="/uploads/images/slayt/<?php echo $SLAYT["IMG_SM"]; ?>" class="col-lg-3 col-md-3 col-sm-12 col-xs-12 ui-state-default">
-                        <div class="lightbox-item p-item" style="cursor:move;">
-                            <img src="/uploads/images/slayt/<?php echo $SLAYT["IMG_SM"]; ?>" alt="<?php echo $SLAYT["TITLE1"]; ?>" />
+                ?>
+                <div sira="<?php echo $SLAYT["SEQUENCE"]; ?>" data-id="<?php echo $SLAYT["ID"]; ?>" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ui-state-default draggable">
+                    <div class="lightbox-item p-item" style="cursor:move;">
+                        <img src="/panel/system/ViewBinaryImage.php?OPTION=SLIDER&ID=<?php echo $SLAYT["ID"]; ?>" alt="<?php echo $SLAYT["TITLE1"]; ?>" />
+                    </div>
+                    <br />
+                    <div style="z-index:9999;">
+                        <div style="float:left;margin-bottom:5px;margin-left:5px;">
+                            <button class="btn bgm-bluegray  waves-effect">
+                                <i class="zmdi zmdi-edit"></i>
+                                <span>
+                                    <?php echo $bahadir->TRANSLATE_WORD("düzenle", 1); ?>
+                                </span>
+                            </button>
                         </div>
-                        <br />
-                        <div style="float:right;">
-                            <div class="toggle-switch toggle-switch-demo" data-ts-color="blue">
+                        <div style="float:right;margin-right:10px;">
+                            <div hidden-input-id="<?php echo $SLAYT["ID"]; ?>" class="toggle-switch" data-ts-color="blue">
                                 <label for="ts<?php echo $SLAYT["ID"]; ?>" class="ts-label">Görünürlük</label>
                                 <input id="ts<?php echo $SLAYT["ID"]; ?>" type="checkbox" hidden="hidden" value="<?php echo $SLAYT["VISIBILITY"]; ?>" />
                                 <label for="ts<?php echo $SLAYT["ID"]; ?>" class="ts-helper"></label>
                             </div>
                         </div>
-                    </li>
-                    <?php
+                    </div>
+                </div>
+                <?php
                     }
-                    ?>
-                </ul>
+                ?>
+
             </div>
             <div class="clearfix"></div>
             <div class="load-more m-t-30">
@@ -89,49 +79,7 @@ if($_POST){
         </div>
     </div>
 </div>
-<script>
-    $(function () {
 
-        $("#slaytlar").sortable({
-            change: function (event, ui) {
-                var SIRA_LISTESI = [];
-                $("#slaytlar").find("li").each(function (index) {
-                    var id = $(this).attr("data-id");
-                    if (typeof id !== 'undefined') {
-                        var sira = index + 1;
-                        var elm = new Array(id, sira);
-                        SIRA_LISTESI.push(elm);
-                    }
-                });
-
-                var formData = new FormData();
-                formData.append("OPTION", "SLIDER_SEQUENCE");
-                formData.append("LISTE", JSON.stringify(SIRA_LISTESI));
-
-                $.ajax({
-                    type: 'POST',
-                    dataType: 'json',
-                    data: formData,
-                    url: 'pages/ajax.php',
-                    processData: false,
-                    contentType: false,
-                    success: function (result) {
-                        console.log(result);
-                    },
-                    error: function (a, b, c) {
-                        console.error("Slayt sırası kaydedilirken bir hata oluştu. Ama bu çok önemli bir şey değil.");
-                        console.error(a);
-                        console.error(b);
-                        console.error(c);
-                    }
-
-                });
-            }
-        });
-
-        //$("#slaytlar").disableSelection();
-    });
-</script>
 <div class="modal fade" id="modalWider" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -140,7 +88,6 @@ if($_POST){
                     <h4 class="modal-title">Slayt</h4>
                 </div>
                 <div class="modal-body">
-
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>1. Başlık</label>
@@ -172,7 +119,6 @@ if($_POST){
                             <textarea name="content" class="html-editor"></textarea>
                         </div>
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <button id="btnSlaytKaydet" type="submit" class="btn btn-link waves-effect">Kaydet</button>
@@ -186,19 +132,3 @@ if($_POST){
     </div>
 </div>
 
-
-<script>
-    $(document).ready(function () {
-        $("#btnSlaytEkle").click(function () {
-            $("#modalWider").modal("show");
-        });
-
-        $("#btnSlaytKaydet").click(function () {
-
-        });
-
-        $("#btnSlaytGuncelle").click(function () {
-
-        });
-    });
-</script>

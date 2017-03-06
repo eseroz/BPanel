@@ -1,6 +1,6 @@
 <?php
 $panel = true;
-include_once("../system/Bahadir.php");
+include_once("../../system/Bahadir.php");
 
 $option = $bahadir->fnc->post("OPTION");
 

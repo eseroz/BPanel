@@ -9,7 +9,7 @@ include_once 'includes.php';
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Bahadır Tıbbi Aletler A.Ş</title>
+        <title><?php echo $bahadir->TRANSLATE_WORD("Bahadır Tıbbi Aletler A.Ş"); ?></title>
         <link href="/panel/assets/plugins/bower_components/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet">
         <link href="/panel/assets/plugins/bower_components/animate.css/animate.min.css" rel="stylesheet">
         <link href="/panel/assets/plugins/bower_components/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
@@ -43,10 +43,10 @@ include_once 'includes.php';
                 switch ($view)
                 {
                     case 'dashboard':
-                        include_once("pages/dashboard.php");
+                        include_once("pages/dashboard/dashboard.php");
                         break;
                     case 'slaytlar':
-                        include_once("pages/slaytlar.php");
+                        include_once("pages/slaytlar/slaytlar.php");
                         break;
                 	default:
                         include_once("pages/dashboard.php");
@@ -62,7 +62,7 @@ include_once 'includes.php';
                     <circle class="plc-path" cx="50" cy="50" r="20" />
                 </svg>
 
-                <p>Please wait...</p>
+                <p><?php echo $bahadir->TRANSLATE_WORD("Lütfen Bekleyin..."); ?></p>
             </div>
         </div>
        <!--[if lt IE 9]>

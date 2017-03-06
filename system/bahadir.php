@@ -35,10 +35,12 @@ class bahadir extends PDO
 
 	function __construct()
 	{
-        $mssql_host = ".";
+        $mssql_host = "e-bahadir.com";
         $mssql_database = "BAHADIR_WEB";
+        //$mssql_uid = "sa";
+        //$mssql_password = "43179488**1CSHARP**1";
         $mssql_uid = "sa";
-        $mssql_password = "43179488**1CSHARP**1";
+        $mssql_password = "bahadir956230**";
         $this->mssqlDb = new MSSQL_Database($mssql_host,$mssql_database,$mssql_uid,$mssql_password);
         $this->SESSION_START();
         $this->fnc = new BFunctions();
@@ -111,15 +113,21 @@ class bahadir extends PDO
         $baslik1 = $this->fnc->post("baslik1");
         $baslik2 = $this->fnc->post("baslik2");
         $aciklama = $this->fnc->post("aciklama");
+        $resim = $_FILES["resim"];
 
+        $IMG_BINARY = $this->fnc->CONVERT_POSTED_FILE_TO_BINARY($resim);
+        $IMG_SVG_STRING = "";
         $content = $this->fnc->post("content");
         $seo = $this->fnc->turkce_karakter_temizle($aciklama);
 
-        $resim = $this->fnc->ResimYukle(self::$slayt_foto_input_name,self::$slayt_foto_x,self::$slayt_foto_y,self::$slayt_foto_tablename,self::$slayt_foto_resize,self::$slayt_foto_ratio_crop);
-        $resim_thumbnail = $this->fnc->ResimYukle(self::$slayt_foto_input_name,self::$slayt_foto_thumbnail_x,self::$slayt_foto_thumbnail_y,self::$slayt_foto_tablename,self::$slayt_foto_resize,self::$slayt_foto_ratio_crop);
+
+
+        //$resim = $this->fnc->ResimYukle(self::$slayt_foto_input_name,self::$slayt_foto_x,self::$slayt_foto_y,self::$slayt_foto_tablename,self::$slayt_foto_resize,self::$slayt_foto_ratio_crop);
+        //$resim_thumbnail = $this->fnc->ResimYukle(self::$slayt_foto_input_name,self::$slayt_foto_thumbnail_x,self::$slayt_foto_thumbnail_y,self::$slayt_foto_tablename,self::$slayt_foto_resize,self::$slayt_foto_ratio_crop);
+
         $SIRA = 0;
 
-        $this->mssqlDb->ExexQuery("INSERT INTO SLIDER (SEQUENCE,IMG_SM,IMG_LG,TITLE1,TITLE2,DESCRIPTION,CONTENT_HTML,SEO) VALUES($SIRA,'$resim_thumbnail','$resim','$baslik1','$baslik2','$aciklama','$content','$seo')");
+        $this->mssqlDb->ExexQuery("INSERT INTO SLIDER (SEQUENCE,IMAGE_BINARY,IMAGE_SVG,TITLE1,TITLE2,DESCRIPTION,CONTENT_HTML,SEO) VALUES($SIRA,$IMG_BINARY,'$IMG_SVG_STRING','$baslik1','$baslik2','$aciklama','$content','$seo')");
 
 
     }
