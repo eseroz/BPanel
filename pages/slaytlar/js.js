@@ -10,7 +10,49 @@
         }
     });
 
+    $("#div_slayt_resmi").hide();
+    $("#div_svg_kodu").show();
+    $('[name="slayt_formati"]:first').click();
+    $('[name="slayt_formati"]').change(function () {
+
+        var valuem = $(this).attr("valuem");
+        var id = $(this).attr("id");
+
+        if (id == "svg_kodu") {
+            if (valuem == 0) {
+                $("#svg_kodu").attr("valuem", 1);
+                $("#resim_dosyasi").attr("valuem", 0);
+                $("#div_slayt_resmi").hide();
+                $("#div_svg_kodu").show();               
+            } else {
+                $("#svg_kodu").attr("valuem", 0);
+                $("#resim_dosyasi").attr("valuem", 1);
+                $("#div_slayt_resmi").show();
+                $("#div_svg_kodu").hide();
+                $("[name='txtSvgKodu']").val("");
+            }            
+        } else {
+            if (valuem == 0) {
+                $("#resim_dosyasi").attr("valuem", 1);
+                $("#svg_kodu").attr("valuem", 0);
+                $("#div_slayt_resmi").show();
+                $("#div_svg_kodu").hide();
+                $("[name='txtSvgKodu']").val("");
+            } else {
+                $("#resim_dosyasi").attr("valuem", 0);
+                $("#svg_kodu").attr("valuem", 1);
+                $("#div_slayt_resmi").hide();
+                $("#div_svg_kodu").show();
+            }
+        }
+    });
+
     $("#sortable").sortable({
+        start: function (event, ui) {
+            var card_height = $(".card").height();
+            var new_height = card_height + 378;
+            $(".card").css({ "height": new_height + "px" });
+        },
         stop: function(event, ui) {
             var SIRA_LISTESI = [];
             $(".draggable").each(function (index) {
@@ -21,6 +63,9 @@
                 }
             });
 
+            var card_height = $(".card").height();
+            var new_height = card_height - 378;
+            $(".card").css({ "height": new_height + "px" });
 
             var formData = new FormData();
             formData.append("OPTION", "SLIDER_SEQUENCE");

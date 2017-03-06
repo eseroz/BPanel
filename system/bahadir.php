@@ -113,13 +113,19 @@ class bahadir extends PDO
         $baslik1 = $this->fnc->post("baslik1");
         $baslik2 = $this->fnc->post("baslik2");
         $aciklama = $this->fnc->post("aciklama");
-        $resim = $_FILES["resim"];
 
-        $IMG_BINARY = $this->fnc->CONVERT_POSTED_FILE_TO_BINARY($resim);
-        $IMG_SVG_STRING = "";
+
+        if($_FILES["resim"]){
+            $IMG_BINARY = $this->fnc->CONVERT_POSTED_FILE_TO_BINARY($_FILES["resim"]);
+        }else
+        {
+            $IMG_BINARY='';
+        }
+
+
+        $IMG_SVG_STRING = $this->fnc->post("txtSvgKodu");
         $content = $this->fnc->post("content");
         $seo = $this->fnc->turkce_karakter_temizle($aciklama);
-
 
 
         //$resim = $this->fnc->ResimYukle(self::$slayt_foto_input_name,self::$slayt_foto_x,self::$slayt_foto_y,self::$slayt_foto_tablename,self::$slayt_foto_resize,self::$slayt_foto_ratio_crop);

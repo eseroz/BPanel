@@ -36,11 +36,11 @@ if($_POST){
             </ul>
         </div>
         <div class="card-body">
-            <div id="sortable" class="lightbox photos clearfix">                
+            <div id="sortable" class="lightbox photos clearfix">
                 <?php
-                    $SLAYTLAR = $bahadir->mssqlDb->Select("SELECT *FROM SLIDER ORDER BY ID ASC");
-                    foreach ($SLAYTLAR as $SLAYT)
-                    {
+                $SLAYTLAR = $bahadir->mssqlDb->Select("SELECT *FROM SLIDER ORDER BY SEQUENCE ASC");
+                foreach ($SLAYTLAR as $SLAYT)
+                {
                 ?>
                 <div sira="<?php echo $SLAYT["SEQUENCE"]; ?>" data-id="<?php echo $SLAYT["ID"]; ?>" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ui-state-default draggable">
                     <div class="lightbox-item p-item" style="cursor:move;">
@@ -66,7 +66,7 @@ if($_POST){
                     </div>
                 </div>
                 <?php
-                    }
+                }
                 ?>
 
             </div>
@@ -102,6 +102,21 @@ if($_POST){
                             <input type="text" name="aciklama" class="form-control" />
                         </div>
                         <div class="form-group">
+                            <label>Slayt Resmi Formatı</label>
+                            <div class="radio m-b-15">
+                                <label>
+                                    <input type="radio" name="slayt_formati" value="svg_kodu" valuem="1" />
+                                    <i class="input-helper"></i>SVG Kodu
+                                </label>
+                            </div>
+                            <div class="radio m-b-15">
+                                <label>
+                                    <input type="radio" name="slayt_formati" value="resim_dosyasi" valuem="0" />
+                                    <i class="input-helper"></i>Resim Dosyası
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group" id="div_slayt_resmi">
                             <label>Slayt Resmi</label>
                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                 <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width:783px !important; height:193px !important; background-color:#f2f2f2;background-size:cover;"></div>
@@ -113,6 +128,10 @@ if($_POST){
                                     <a href="#" class="btn btn-danger fileinput-exists" data-dismiss="fileinput">Sil</a>
                                 </div>
                             </div>
+                        </div>
+                        <div class="form-group" id="div_svg_kodu">
+                            <label>Svg Kodu</label>
+                            <textarea name="txtSvgKodu" rows="5" class="form-control"></textarea>
                         </div>
                         <div class="form-group">
                             <label>İçerik</label>
