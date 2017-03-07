@@ -22,9 +22,10 @@ include_once 'includes.php';
         <link href="/panel/assets/css/app_1.min.css" rel="stylesheet">
         <link href="/panel/assets/css/app_2.min.css" rel="stylesheet">
 
-
  
         <script src="/panel/assets/plugins/bower_components/jquery/dist/jquery.min.js"></script>
+
+
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     </head>
     <body>

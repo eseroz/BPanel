@@ -113,7 +113,7 @@ class bahadir extends PDO
         $baslik1 = $this->fnc->post("baslik1");
         $baslik2 = $this->fnc->post("baslik2");
         $aciklama = $this->fnc->post("aciklama");
-
+        $gorunurluk = $this->fnc->post("gorunurluk");
 
         if($_FILES["resim"]){
             $IMG_BINARY = $this->fnc->CONVERT_POSTED_FILE_TO_BINARY($_FILES["resim"]);
@@ -133,7 +133,7 @@ class bahadir extends PDO
 
         $SIRA = 0;
 
-        $this->mssqlDb->ExexQuery("INSERT INTO SLIDER (SEQUENCE,IMAGE_BINARY,IMAGE_SVG,TITLE1,TITLE2,DESCRIPTION,CONTENT_HTML,SEO) VALUES($SIRA,$IMG_BINARY,'$IMG_SVG_STRING','$baslik1','$baslik2','$aciklama','$content','$seo')");
+        $this->mssqlDb->ExexQuery("INSERT INTO SLIDER (SEQUENCE,IMAGE_BINARY,IMAGE_SVG,TITLE1,TITLE2,DESCRIPTION,CONTENT_HTML,SEO,VISIBILITY) VALUES($SIRA,$IMG_BINARY,'$IMG_SVG_STRING','$baslik1','$baslik2','$aciklama','$content','$seo','$gorunurluk')");
 
 
     }

@@ -16,5 +16,13 @@ switch ($option)
         }
         echo json_encode(array(count($LIST)));
         break;
+
+    case 'SLIDER_STATE_CHANGED':
+        $STATE = $bahadir->fnc->post("STATE");
+        if($STATE == "true"){ $STATE = 1; } else { $STATE = 0; }
+        $ID = $bahadir->fnc->post("ID");
+        $bahadir->mssqlDb->ExexQuery("UPDATE SLIDER SET VISIBILITY = $STATE WHERE ID = $ID");
+        echo json_encode(array("STATE"=>$STATE,"ID"=>$ID)) ;
+        break;
 }
 ?>
