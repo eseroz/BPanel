@@ -1,6 +1,42 @@
-﻿$(document).ready(function () {
+﻿function ILK_TIKLAMA(objTgLabel) {
+    var id = $(objTgLabel).attr("id");
+    $("body")
+    .off("click", "#" + id, null);
+}
 
+function handler(objTgLabel) {
+
+    var CHECKBOX_ID = $(objTgLabel).parent().find(".check-toggle").attr("id");
+    var NEW_STATE = $("#" + CHECKBOX_ID).prop("checked");
+    var UNIQ_ID = $("#" + CHECKBOX_ID).attr("data-uniq-id");
+    var DB_STATE = $("#" + CHECKBOX_ID).attr("db-state");
+    
+    var formData = new FormData();
+    formData.append("OPTION", "SLIDER_STATE_CHANGED");
+    formData.append("STATE", NEW_STATE);
+    formData.append("ID", UNIQ_ID);
+
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        data: formData,
+        processData: false,
+        contentType: false,
+        url: 'pages/slaytlar/ajax.php',
+        success: function (RESULT) {
+            console.log(RESULT);
+            $("#ts" + RESULT.ID).attr("db-state", RESULT.STATE);
+        },
+        error: function () {
+            alert("Hata!");
+        }
+    });
+}
+
+$(document).ready(function () {
+    
     $(".toggle-switch").click(function () {
+<<<<<<< HEAD
         var hidden_input_id =  $(this).attr("hidden-input-id");
         var hidden_input_state = $("#ts" + hidden_input_id).prop("checked");
 
@@ -31,9 +67,56 @@
         });
 
 
+=======
+        handler($(this).find(".ts-helper"));
     });
 
+    $("#div_slayt_resmi").hide();
+    $("#div_svg_kodu").show();
+    $('[name="slayt_formati"]:first').click();
+    $('[name="slayt_formati"]').change(function () {
+
+        var valuem = $(this).attr("valuem");
+        var id = $(this).attr("id");
+
+        if (id == "svg_kodu") {
+            if (valuem == 0) {
+                $("#svg_kodu").attr("valuem", 1);
+                $("#resim_dosyasi").attr("valuem", 0);
+                $("#div_slayt_resmi").hide();
+                $("#div_svg_kodu").show();               
+            } else {
+                $("#svg_kodu").attr("valuem", 0);
+                $("#resim_dosyasi").attr("valuem", 1);
+                $("#div_slayt_resmi").show();
+                $("#div_svg_kodu").hide();
+                $("[name='txtSvgKodu']").val("");
+            }            
+        } else {
+            if (valuem == 0) {
+                $("#resim_dosyasi").attr("valuem", 1);
+                $("#svg_kodu").attr("valuem", 0);
+                $("#div_slayt_resmi").show();
+                $("#div_svg_kodu").hide();
+                $("[name='txtSvgKodu']").val("");
+            } else {
+                $("#resim_dosyasi").attr("valuem", 0);
+                $("#svg_kodu").attr("valuem", 1);
+                $("#div_slayt_resmi").hide();
+                $("#div_svg_kodu").show();
+            }
+        }
+>>>>>>> origin/master
+    });
+
+
     $("#sortable").sortable({
+        handle: ".drag-handle",
+        start: function (event, ui) {
+            //var card_height = $(".card").height();
+            //var new_height = card_height + 378;
+            //$(".card").css({ "height": new_height + "px" });
+        },
         stop: function(event, ui) {
             var SIRA_LISTESI = [];
             $(".draggable").each(function (index) {
@@ -43,7 +126,6 @@
                     SIRA_LISTESI.push(elm);
                 }
             });
-
 
             var formData = new FormData();
             formData.append("OPTION", "SLIDER_SEQUENCE");

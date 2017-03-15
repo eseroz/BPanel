@@ -36,39 +36,58 @@ if($_POST){
             </ul>
         </div>
         <div class="card-body">
-            <div id="sortable" class="lightbox photos clearfix">                
+            <div id="sortable" class="lightbox photos clearfix">
                 <?php
                 $SLAYTLAR = $bahadir->mssqlDb->Select("SELECT *FROM SLIDER ORDER BY SEQUENCE ASC");
+<<<<<<< HEAD
                     foreach ($SLAYTLAR as $SLAYT)
                     {
+=======
+                foreach ($SLAYTLAR as $SLAYT)
+                {
+>>>>>>> origin/master
                 ?>
                 <div sira="<?php echo $SLAYT["SEQUENCE"]; ?>" data-id="<?php echo $SLAYT["ID"]; ?>" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ui-state-default draggable">
-                    <div class="lightbox-item p-item" style="cursor:move;">
+                    <div class="lightbox-item p-item drag-handle" style="cursor:move;">
                         <img src="/panel/system/ViewBinaryImage.php?OPTION=SLIDER&ID=<?php echo $SLAYT["ID"]; ?>" alt="<?php echo $SLAYT["TITLE1"]; ?>" />
                     </div>
-                    <br />
-                    <div style="z-index:9999;">
-                        <div style="float:left;margin-bottom:5px;margin-left:5px;">
-                            <button class="btn bgm-bluegray  waves-effect">
-                                <i class="zmdi zmdi-edit"></i>
-                                <span>
-                                    <?php echo $bahadir->TRANSLATE_WORD("düzenle", 1); ?>
-                                </span>
-                            </button>
-                        </div>
-                        <div style="float:right;margin-right:10px;">
-                            <div hidden-input-id="<?php echo $SLAYT["ID"]; ?>" class="toggle-switch" data-ts-color="blue">
-                                <label for="ts<?php echo $SLAYT["ID"]; ?>" class="ts-label">Görünürlük</label>
-                                <input id="ts<?php echo $SLAYT["ID"]; ?>" type="checkbox" hidden="hidden" value="<?php echo $SLAYT["VISIBILITY"]; ?>" />
-                                <label for="ts<?php echo $SLAYT["ID"]; ?>" class="ts-helper"></label>
-                            </div>
+                    <br />                 
+                    <div style="float:left;margin-bottom:5px;margin-left:5px;">
+                        <button class="btn bgm-orange waves-effect" title="<?php echo $bahadir->TRANSLATE_WORD("buttona tıklayarak bu slaytı yeniden düzenleyebilirsiniz.", 1); ?>">
+                            <i class="zmdi zmdi-edit"></i>
+                            <span><?php echo $bahadir->TRANSLATE_WORD("düzenle", 1); ?></span>
+                        </button>
+                    </div>
+
+                    <div style="float:right;margin-right:10px;">
+                        <?php
+                        echo $SLAYT["VISIBILITY"];
+                            
+
+                        ?>
+
+                        <div class="toggle-switch">
+                            <input id="ts<?php echo $SLAYT["ID"]; ?>" data-uniq-id="<?php echo $SLAYT["ID"]; ?>" db-state="<?php echo $SLAYT["VISIBILITY"]; ?>" type="checkbox" class="check-toggle" hidden="hidden" />
+                            <label for="ts<?php echo $SLAYT["ID"]; ?>" class="ts-helper"></label>
                         </div>
                     </div>
                 </div>
-                <?php
-                    }
-                ?>
 
+                <?php
+                    if($SLAYT["VISIBILITY"] == 1){
+                ?>
+                <script>
+                    $(document).ready(function () {
+                        ILK_TIKLAMA($("#ts" + '<?php echo $SLAYT["ID"]; ?>').parent().find(".ts-helper"));
+                    });
+                </script>
+                
+                <?php                   
+                }
+                ?>
+                <?php
+                }
+                ?>
             </div>
             <div class="clearfix"></div>
             <div class="load-more m-t-30">
@@ -102,6 +121,21 @@ if($_POST){
                             <input type="text" name="aciklama" class="form-control" />
                         </div>
                         <div class="form-group">
+                            <label>Slayt Resmi Formatı</label>
+                            <div class="radio m-b-15">
+                                <label>
+                                    <input type="radio" name="slayt_formati" value="svg_kodu" valuem="1" />
+                                    <i class="input-helper"></i>SVG Kodu
+                                </label>
+                            </div>
+                            <div class="radio m-b-15">
+                                <label>
+                                    <input type="radio" name="slayt_formati" value="resim_dosyasi" valuem="0" />
+                                    <i class="input-helper"></i>Resim Dosyası
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group" id="div_slayt_resmi">
                             <label>Slayt Resmi</label>
                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                 <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width:783px !important; height:193px !important; background-color:#f2f2f2;background-size:cover;"></div>
@@ -114,10 +148,21 @@ if($_POST){
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group" id="div_svg_kodu">
+                            <label>Svg Kodu</label>
+                            <textarea name="txtSvgKodu" rows="5" class="form-control"></textarea>
+                        </div>
+
                         <div class="form-group">
                             <label>İçerik</label>
                             <textarea name="content" class="html-editor"></textarea>
                         </div>
+
+                        <div class="form-group">
+                            <label>Switch</label>
+                            <input type="checkbox" plugin-type="switch-button" checked />
+                        </div>
+                        
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -131,4 +176,3 @@ if($_POST){
         </div>
     </div>
 </div>
-
