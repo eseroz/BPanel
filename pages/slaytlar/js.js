@@ -1,13 +1,36 @@
 ﻿$(document).ready(function () {
 
     $(".toggle-switch").click(function () {
-        var hidden_input_id = "ts" + $(this).attr("hidden-input-id");
-        var hidden_input_state = $("#" + hidden_input_id).prop("checked");
-        if (hidden_input_id == true) {
-            $("#" + hidden_input_id).prop("checked", false);
-        } else {
-            $("#" + hidden_input_id).prop("checked", true);
-        }
+        var hidden_input_id =  $(this).attr("hidden-input-id");
+        var hidden_input_state = $("#ts" + hidden_input_id).prop("checked");
+
+        $("#ts" + hidden_input_id).prop("checked", !hidden_input_state);
+
+        var STATE = !hidden_input_state == true ? 1 : 0;
+        var formData = new FormData();
+        formData.append("OPTION", "CHANGE_STATE");
+        formData.append("ID", hidden_input_id);
+        formData.append("STATE", STATE);
+        
+        $.ajax({
+            type: 'POST',
+            dataType: 'text',
+            data: formData,
+            url:'/panel/pages/slaytlar/ajax.php',
+            processData: false,
+            contentType: false,
+            success: function () {
+
+            },
+            error: function (a, b, c) {
+                console.log(a);
+                console.log(b);
+                console.log(c);
+                alert("STATE değişirken bir hata oluştu ama sorun değil işlemlerine devam edebilirsin.");
+            }
+        });
+
+
     });
 
     $("#sortable").sortable({

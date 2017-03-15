@@ -38,7 +38,7 @@ if($_POST){
         <div class="card-body">
             <div id="sortable" class="lightbox photos clearfix">                
                 <?php
-                    $SLAYTLAR = $bahadir->mssqlDb->Select("SELECT *FROM SLIDER ORDER BY ID ASC");
+                $SLAYTLAR = $bahadir->mssqlDb->Select("SELECT *FROM SLIDER ORDER BY SEQUENCE ASC");
                     foreach ($SLAYTLAR as $SLAYT)
                     {
                 ?>

@@ -35,12 +35,15 @@ class bahadir extends PDO
 
 	function __construct()
 	{
-        $mssql_host = "e-bahadir.com";
-        $mssql_database = "BAHADIR_WEB";
+        //$mssql_host = "e-bahadir.com";
+        //$mssql_database = "BAHADIR_WEB";
         //$mssql_uid = "sa";
-        //$mssql_password = "43179488**1CSHARP**1";
+        //$mssql_password = "bahadir956230**";
+
+        $mssql_host = ".";
+        $mssql_database = "BAHADIR_WEB";
         $mssql_uid = "sa";
-        $mssql_password = "bahadir956230**";
+        $mssql_password = "43179488**1CSHARP**1";
         $this->mssqlDb = new MSSQL_Database($mssql_host,$mssql_database,$mssql_uid,$mssql_password);
         $this->SESSION_START();
         $this->fnc = new BFunctions();
